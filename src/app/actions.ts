@@ -5,28 +5,42 @@ import { revalidatePath } from "next/cache";
 import { BookFormValues, BookSchema } from "@/lib/schemas";
 import { writeFile } from "fs/promises";
 import { join } from "path";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+
+async function getUserSession() {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) {
+    throw new Error("You must be signed in to perform this action.");
+  }
+  return session;
+}
 
 export async function getBooks({
   query,
 }: {
   query?: string;
 }) {
-  const where = query
-    ? {
-        OR: [
-          {
-            title: {
-              contains: query,
-            },
-          },
-          {
-            author: {
-              contains: query,
-            },
-          },
-        ],
-      }
-    : {};
+  const session = await getUserSession();
+  
+  const where: any = {
+    userId: session.user.id,
+  };
+
+  if (query) {
+    where.OR = [
+      {
+        title: {
+          contains: query,
+        },
+      },
+      {
+        author: {
+          contains: query,
+        },
+      },
+    ];
+  }
 
   return await prisma.book.findMany({
     where,
@@ -37,6 +51,7 @@ export async function getBooks({
 }
 
 export async function addBook(formData: FormData) {
+  const session = await getUserSession();
   const values = Object.fromEntries(formData.entries());
   const validatedFields = BookSchema.safeParse(values);
 
@@ -85,6 +100,7 @@ export async function addBook(formData: FormData) {
       publishedAt: publishedDate,
       description: description || null,
       notes: notes || null,
+      userId: session.user.id,
     },
   });
 
@@ -93,9 +109,11 @@ export async function addBook(formData: FormData) {
 }
 
 export async function deleteBook(id: string) {
+  const session = await getUserSession();
   await prisma.book.delete({
     where: {
       id,
+      userId: session.user.id,
     },
   });
 
@@ -103,6 +121,7 @@ export async function deleteBook(id: string) {
 }
 
 export async function updateBook(id: string, formData: FormData) {
+  const session = await getUserSession();
   const values = Object.fromEntries(formData.entries());
   const validatedFields = BookSchema.safeParse(values);
 
@@ -156,7 +175,10 @@ export async function updateBook(id: string, formData: FormData) {
   }
 
   await prisma.book.update({
-    where: { id },
+    where: { 
+      id,
+      userId: session.user.id,
+    },
     data: dataToUpdate,
   });
 
