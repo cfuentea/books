@@ -12,7 +12,9 @@ export default function Home() {
           <p className="text-muted-foreground">Your personal library at a glance.</p>
         </div>
         <div className="flex items-center gap-4">
-          <SearchBooks />
+          <Suspense fallback={<div className="h-10 w-64" />}>
+            <SearchBooks />
+          </Suspense>
           <AddBook />
         </div>
       </div>
