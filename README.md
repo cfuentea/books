@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Gestor de Biblioteca Personal
 
-## Getting Started
+Esta es una aplicación web desarrollada con [Next.js](https://nextjs.org) para gestionar tu biblioteca personal de manera sencilla. Te permite agregar, buscar y organizar tus libros favoritos.
 
-First, run the development server:
+## Funcionalidades Principales
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Escaneo de códigos de barras**: Utiliza la cámara de tu dispositivo para escanear códigos ISBN y agregar libros automáticamente a tu colección.
+- **Búsqueda avanzada**: Encuentra libros por título o autor utilizando un formulario de búsqueda interactivo.
+- **Gestión de libros**: Agrega nuevos libros manualmente, actualiza información existente o elimina libros de tu colección.
+- **Lista de libros**: Muestra tu biblioteca con opciones de filtrado y diseño responsivo.
+- **Autenticación de usuarios**: Accede a tu biblioteca personal mediante inicio de sesión con Google.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologías
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js, React
+- **Backend**: Prisma para la gestión de datos y APIs externas como Google Books y OpenLibrary para obtener información de libros.
+- **Base de datos**: Almacenamiento con una solución compatible con Prisma.
+- **Estilo**: Componentes personalizados con diseño moderno y responsivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
