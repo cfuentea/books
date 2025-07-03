@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, X } from "lucide-react";
+import { Search, X, Sparkles } from "lucide-react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useTransition, useState, useEffect } from "react";
 
@@ -41,29 +41,52 @@ export function SearchBooks() {
   }
 
   return (
-    <form onSubmit={handleSearch} className="flex items-center gap-2">
-      <div className="relative w-full max-w-sm">
-        <Input
-          placeholder="Search by title or author..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="pr-10"
-        />
-        {query && (
-            <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="absolute right-0 top-0 h-full px-3"
-                onClick={clearSearch}
+    <form onSubmit={handleSearch} className="w-full max-w-md">
+      <div className="relative group">
+        {/* Background glow effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        
+        {/* Search container */}
+        <div className="relative glass rounded-xl p-1">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Buscar por título o autor..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="pl-10 pr-10 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/70"
+              />
+              {query && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-7 w-7 hover:bg-muted/50"
+                  onClick={clearSearch}
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              )}
+            </div>
+            
+            <Button 
+              type="submit" 
+              disabled={isPending}
+              className="btn-animate bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-lg"
             >
-                <X className="h-4 w-4" />
+              {isPending ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  Buscar
+                </>
+              )}
             </Button>
-        )}
+          </div>
+        </div>
       </div>
-      <Button type="submit" disabled={isPending}>
-        <Search className="mr-2 h-4 w-4" /> Search
-      </Button>
     </form>
   );
 } 
