@@ -21,13 +21,23 @@ export default function Home() {
       <div className="container mx-auto flex flex-col items-center justify-center h-screen gap-6">
         <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight">Book Tracker</h1>
-            <p className="text-xl text-muted-foreground mt-2">Welcome to your personal library.</p>
-            <p className="text-lg text-muted-foreground">Please sign in to continue.</p>
+            <p className="text-xl text-muted-foreground mt-2">Tu biblioteca personal en la nube</p>
+            <p className="text-lg text-muted-foreground mb-4">
+              Actualmente estamos en fase beta con acceso limitado.
+            </p>
         </div>
-        <Button onClick={() => signIn("google")}>
-          <Icons.google className="mr-2 h-4 w-4" />
-          Sign in with Google
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button onClick={() => signIn("google")} variant="default">
+            <Icons.google className="mr-2 h-4 w-4" />
+            Iniciar Sesión
+          </Button>
+          <Button onClick={() => window.location.href = '/waitlist'} variant="outline">
+            Unirse a la Lista de Espera
+          </Button>
+        </div>
+        <div className="text-center text-sm text-muted-foreground mt-4">
+          <p>¿No tienes acceso? Únete a nuestra lista de espera para ser notificado cuando esté disponible.</p>
+        </div>
       </div>
     );
   }

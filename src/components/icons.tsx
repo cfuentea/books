@@ -1,4 +1,4 @@
-import { LucideProps } from "lucide-react";
+import { LucideProps, Book, Loader2 } from "lucide-react";
 
 export const Icons = {
   google: (props: LucideProps) => (
@@ -24,4 +24,6 @@ export const Icons = {
       <path d="M14.288 10.745L11.5 13.248l-2.788-2.503" />
     </svg>
   ),
+  book: Book,
+  spinner: Loader2,
 }; 
