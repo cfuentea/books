@@ -7,6 +7,7 @@ import { writeFile } from "fs/promises";
 import { join } from "path";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Decimal } from "@prisma/client/runtime/library";
 
 async function getUserSession() {
   const session = await getServerSession(authOptions);
@@ -59,7 +60,22 @@ export async function addBook(formData: FormData) {
     return { error: "Invalid data" };
   }
 
-  const { title, author, isbn, publishedAt, description, notes } = validatedFields.data;
+  const { 
+    title, 
+    author, 
+    isbn, 
+    publishedAt, 
+    description, 
+    notes,
+    purchaseDate,
+    price,
+    condition,
+    location,
+    isLent,
+    lentTo,
+    lentAt,
+    tags
+  } = validatedFields.data;
   let cover = validatedFields.data.cover;
 
   let coverPath: string | null = null;
@@ -90,6 +106,22 @@ export async function addBook(formData: FormData) {
       }
   }
 
+  let purchaseDateTime: Date | null = null;
+  if (purchaseDate) {
+    const date = new Date(purchaseDate as string);
+    if (!isNaN(date.getTime())) {
+      purchaseDateTime = date;
+    }
+  }
+
+  let lentDateTime: Date | null = null;
+  if (lentAt) {
+    const date = new Date(lentAt as string);
+    if (!isNaN(date.getTime())) {
+      lentDateTime = date;
+    }
+  }
+
   await prisma.book.create({
     data: {
       title,
@@ -99,6 +131,14 @@ export async function addBook(formData: FormData) {
       publishedAt: publishedDate,
       description: description || null,
       notes: notes || null,
+      purchaseDate: purchaseDateTime,
+      price: price ? new Decimal(price) : null,
+      condition: condition || 'GOOD',
+      location: location || null,
+      isLent: isLent || false,
+      lentTo: isLent ? (lentTo || null) : null,
+      lentAt: isLent ? lentDateTime : null,
+      tags: tags || [],
       userId: session.user.id,
     },
   });
@@ -129,7 +169,22 @@ export async function updateBook(id: string, formData: FormData) {
     return { error: "Invalid data" };
   }
 
-  const { title, author, isbn, publishedAt, description, notes } = validatedFields.data;
+  const { 
+    title, 
+    author, 
+    isbn, 
+    publishedAt, 
+    description, 
+    notes,
+    purchaseDate,
+    price,
+    condition,
+    location,
+    isLent,
+    lentTo,
+    lentAt,
+    tags
+  } = validatedFields.data;
   let cover = validatedFields.data.cover;
 
   let coverPath: string | null = null;
@@ -160,6 +215,22 @@ export async function updateBook(id: string, formData: FormData) {
       }
   }
 
+  let purchaseDateTime: Date | null = null;
+  if (purchaseDate) {
+    const date = new Date(purchaseDate as string);
+    if (!isNaN(date.getTime())) {
+      purchaseDateTime = date;
+    }
+  }
+
+  let lentDateTime: Date | null = null;
+  if (lentAt) {
+    const date = new Date(lentAt as string);
+    if (!isNaN(date.getTime())) {
+      lentDateTime = date;
+    }
+  }
+
   const dataToUpdate: any = {
     title,
     author: author || "Unknown Author",
@@ -167,6 +238,14 @@ export async function updateBook(id: string, formData: FormData) {
     publishedAt: publishedDate,
     description: description || null,
     notes: notes || null,
+    purchaseDate: purchaseDateTime,
+    price: price ? new Decimal(price) : null,
+    condition: condition || 'GOOD',
+    location: location || null,
+    isLent: isLent || false,
+    lentTo: isLent ? (lentTo || null) : null,
+    lentAt: isLent ? lentDateTime : null,
+    tags: tags || [],
   };
 
   if (coverPath) {

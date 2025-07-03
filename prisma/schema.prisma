@@ -17,6 +17,17 @@ model Book {
   publishedAt DateTime?
   description String?
   notes       String?
+  
+  // Nuevos campos
+  purchaseDate DateTime?    // Fecha de compra
+  price        Decimal?     // Precio (opcional)
+  condition    BookCondition @default(GOOD) // Estado del libro
+  location     String?      // Ubicación física
+  isLent       Boolean      @default(false) // Si está prestado
+  lentTo       String?      // A quién está prestado
+  lentAt       DateTime?    // Cuándo se prestó
+  tags         String[]     // Etiquetas personalizadas (array de strings)
+  
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   userId      String
@@ -107,4 +118,12 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum BookCondition {
+  NEW         // Nuevo
+  LIKE_NEW    // Como nuevo
+  GOOD        // Bueno
+  FAIR        // Regular
+  POOR        // Malo
 }

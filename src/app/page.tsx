@@ -1,6 +1,6 @@
 "use client";
 
-import { AddBook } from "@/components/books/AddBook";
+import { AddBookWizard } from "@/components/books/AddBookWizard";
 import { BookList } from "@/components/books/BookList";
 import { SearchBooks } from "@/components/books/SearchBooks";
 import { UserNav } from "@/components/auth/UserNav";
@@ -129,7 +129,7 @@ export default function Home() {
               <p className="text-lg text-muted-foreground mb-2">Así se ve tu biblioteca personal:</p>
               <div className="rounded-xl overflow-hidden border border-muted shadow-lg">
                 {/* Aquí podrías poner un screenshot real o un video demo */}
-                <Image src="/demo-screenshot.png" alt="Screenshot app" width={600} height={320} className="w-full object-cover" />
+                <Image src="/demo-screenshot.svg" alt="Screenshot app" width={600} height={320} className="w-full object-cover" />
               </div>
               <p className="text-xs text-muted-foreground mt-2">* Demo visual, tu biblioteca se verá así de bien</p>
             </div>
@@ -207,7 +207,7 @@ export default function Home() {
                 </Suspense>
               </div>
               <div className="flex items-center gap-2">
-                <AddBook />
+                <AddBookWizard />
                 <UserNav />
               </div>
             </div>
