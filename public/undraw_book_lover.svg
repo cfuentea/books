@@ -1,1 +1,48 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8" data-next-head=""/><meta name="viewport" content="width=device-width" data-next-head=""/><title data-next-head="">404: This page could not be found</title><link rel="preload" href="/_next/static/media/f7040064460a9b21-s.p.woff2" as="font" type="font/woff2" crossorigin="anonymous" data-next-font="size-adjust"/><link rel="preload" href="/_next/static/css/d16b9ac4ee8b8fe6.css" as="style"/><link rel="stylesheet" href="/_next/static/css/d16b9ac4ee8b8fe6.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" noModule="" src="/_next/static/chunks/polyfills-42372ed130431b0a.js"></script><script src="/_next/static/chunks/webpack-2aa3ab9bb630d3af.js" defer=""></script><script src="/_next/static/chunks/framework-e78c0713ba93908d.js" defer=""></script><script src="/_next/static/chunks/main-e7bc99b3e0a370fc.js" defer=""></script><script src="/_next/static/chunks/pages/_app-e37a74471b5373b7.js" defer=""></script><script src="/_next/static/chunks/pages/_error-fde50cb7f1ab27e0.js" defer=""></script><script src="/_next/static/mMWmJSt23qpgo8cLTD_pB/_buildManifest.js" defer=""></script><script src="/_next/static/mMWmJSt23qpgo8cLTD_pB/_ssgManifest.js" defer=""></script><style id="__jsx-2204048280">html{font-family:'Mulish', 'Mulish Fallback'}</style></head><body><div id="__next"><div style="font-family:system-ui,&quot;Segoe UI&quot;,Roboto,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;height:100vh;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="line-height:48px"><style>body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}</style><h1 class="next-error-h1" style="display:inline-block;margin:0 20px 0 0;padding-right:23px;font-size:24px;font-weight:500;vertical-align:top">404</h1><div style="display:inline-block"><h2 style="font-size:14px;font-weight:400;line-height:28px">This page could not be found<!-- -->.</h2></div></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":404}},"page":"/_error","query":{},"buildId":"mMWmJSt23qpgo8cLTD_pB","nextExport":true,"isFallback":false,"gip":true,"scriptLoader":[]}</script></body></html>
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="url(#gradient)"/>
+  
+  <!-- Book 1 -->
+  <rect x="80" y="120" width="60" height="80" rx="4" fill="#8B5CF6" stroke="#7C3AED" stroke-width="2"/>
+  <rect x="85" y="125" width="50" height="70" fill="#F3F4F6"/>
+  <line x1="85" y1="145" x2="135" y2="145" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="85" y1="155" x2="135" y2="155" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="85" y1="165" x2="135" y2="165" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- Book 2 -->
+  <rect x="150" y="110" width="60" height="80" rx="4" fill="#3B82F6" stroke="#2563EB" stroke-width="2"/>
+  <rect x="155" y="115" width="50" height="70" fill="#F3F4F6"/>
+  <line x1="155" y1="135" x2="205" y2="135" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="155" y1="145" x2="205" y2="145" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="155" y1="155" x2="205" y2="155" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- Book 3 -->
+  <rect x="220" y="130" width="60" height="80" rx="4" fill="#10B981" stroke="#059669" stroke-width="2"/>
+  <rect x="225" y="135" width="50" height="70" fill="#F3F4F6"/>
+  <line x1="225" y1="155" x2="275" y2="155" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="225" y1="165" x2="275" y2="165" stroke="#9CA3AF" stroke-width="1"/>
+  <line x1="225" y1="175" x2="275" y2="175" stroke="#9CA3AF" stroke-width="1"/>
+  
+  <!-- Person reading -->
+  <circle cx="200" cy="80" r="25" fill="#F59E0B"/>
+  <rect x="185" y="105" width="30" height="40" rx="15" fill="#F59E0B"/>
+  
+  <!-- Glasses -->
+  <circle cx="190" cy="75" r="8" fill="none" stroke="#374151" stroke-width="2"/>
+  <circle cx="210" cy="75" r="8" fill="none" stroke="#374151" stroke-width="2"/>
+  <line x1="198" y1="75" x2="202" y2="75" stroke="#374151" stroke-width="2"/>
+  
+  <!-- Heart -->
+  <path d="M320 100 C320 80 300 70 290 90 C280 70 260 80 260 100 C260 120 290 140 290 140 C290 140 320 120 320 100 Z" fill="#EF4444"/>
+  
+  <!-- Stars -->
+  <path d="M50 50 L52 55 L57 55 L53 58 L55 63 L50 60 L45 63 L47 58 L43 55 L48 55 Z" fill="#FCD34D"/>
+  <path d="M350 60 L352 65 L357 65 L353 68 L355 73 L350 70 L345 73 L347 68 L343 65 L348 65 Z" fill="#FCD34D"/>
+  <path d="M70 200 L72 205 L77 205 L73 208 L75 213 L70 210 L65 213 L67 208 L63 205 L68 205 Z" fill="#FCD34D"/>
+  
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F3F4F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E5E7EB;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>

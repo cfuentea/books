@@ -1,1 +1,50 @@
- 
+<svg width="600" height="320" viewBox="0 0 600 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="320" fill="#F8FAFC"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="600" height="60" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="20" y="15" width="120" height="30" rx="6" fill="#3B82F6"/>
+  <text x="80" y="35" text-anchor="middle" fill="white" font-family="Arial" font-size="14" font-weight="bold">Book Tracker</text>
+  
+  <!-- Search bar -->
+  <rect x="160" y="15" width="200" height="30" rx="6" fill="#F1F5F9" stroke="#CBD5E1"/>
+  <text x="170" y="35" fill="#64748B" font-family="Arial" font-size="12">Buscar libros...</text>
+  
+  <!-- Add book button -->
+  <rect x="380" y="15" width="100" height="30" rx="6" fill="#8B5CF6"/>
+  <text x="430" y="35" text-anchor="middle" fill="white" font-family="Arial" font-size="12">+ Añadir</text>
+  
+  <!-- User avatar -->
+  <circle cx="520" cy="30" r="15" fill="#F59E0B"/>
+  
+  <!-- Book grid -->
+  <rect x="20" y="80" width="130" height="200" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="30" y="90" width="110" height="140" rx="4" fill="#F1F5F9"/>
+  <text x="85" y="250" text-anchor="middle" fill="#1E293B" font-family="Arial" font-size="12" font-weight="bold">El Señor de los Anillos</text>
+  <text x="85" y="265" text-anchor="middle" fill="#64748B" font-family="Arial" font-size="10">J.R.R. Tolkien</text>
+  
+  <rect x="170" y="80" width="130" height="200" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="180" y="90" width="110" height="140" rx="4" fill="#F1F5F9"/>
+  <text x="235" y="250" text-anchor="middle" fill="#1E293B" font-family="Arial" font-size="12" font-weight="bold">1984</text>
+  <text x="235" y="265" text-anchor="middle" fill="#64748B" font-family="Arial" font-size="10">George Orwell</text>
+  
+  <rect x="320" y="80" width="130" height="200" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="330" y="90" width="110" height="140" rx="4" fill="#F1F5F9"/>
+  <text x="385" y="250" text-anchor="middle" fill="#1E293B" font-family="Arial" font-size="12" font-weight="bold">Cien años de soledad</text>
+  <text x="385" y="265" text-anchor="middle" fill="#64748B" font-family="Arial" font-size="10">Gabriel García Márquez</text>
+  
+  <rect x="470" y="80" width="130" height="200" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <rect x="480" y="90" width="110" height="140" rx="4" fill="#F1F5F9"/>
+  <text x="535" y="250" text-anchor="middle" fill="#1E293B" font-family="Arial" font-size="12" font-weight="bold">Don Quijote</text>
+  <text x="535" y="265" text-anchor="middle" fill="#64748B" font-family="Arial" font-size="10">Miguel de Cervantes</text>
+  
+  <!-- Status indicators -->
+  <circle cx="40" cy="280" r="4" fill="#10B981"/>
+  <text x="50" y="285" fill="#64748B" font-family="Arial" font-size="10">Disponible</text>
+  
+  <circle cx="120" cy="280" r="4" fill="#F59E0B"/>
+  <text x="130" y="285" fill="#64748B" font-family="Arial" font-size="10">Prestado</text>
+  
+  <circle cx="200" cy="280" r="4" fill="#EF4444"/>
+  <text x="210" y="285" fill="#64748B" font-family="Arial" font-size="10">Favorito</text>
+</svg> 
