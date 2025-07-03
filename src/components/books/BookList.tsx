@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { BookCard } from "./BookCard";
 import { getBooks } from "@/app/actions";
@@ -13,35 +13,52 @@ import { BookGridSkeleton } from "@/components/ui/loading";
 export function BookList() {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
+  const LIMIT = 20;
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastBookRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isLoadingMore) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new window.IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMore();
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoadingMore, hasMore]
+  );
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      setIsLoading(true);
-      const allBooks = await getBooks({});
-      setBooks(allBooks);
+    setBooks([]);
+    setHasMore(true);
+    setIsLoading(true);
+    getBooks({ query, limit: LIMIT, cursor: null }).then(res => {
+      setBooks(res.books);
+      setHasMore(res.hasMore);
       setIsLoading(false);
-    };
-    fetchBooks();
-  }, []);
+    });
+  }, [query]);
 
-  const filteredBooks = useMemo(() => {
-    if (!query) {
-      return books;
-    }
-    return books.filter(
-      (book) =>
-        book.title.toLowerCase().includes(query.toLowerCase()) ||
-        book.author.toLowerCase().includes(query.toLowerCase())
-    );
-  }, [books, query]);
+  const loadMore = async () => {
+    if (!hasMore || isLoadingMore || books.length === 0) return;
+    setIsLoadingMore(true);
+    const last = books[books.length - 1];
+    const res = await getBooks({ query, limit: LIMIT, cursor: last.id });
+    setBooks(prev => [...prev, ...res.books]);
+    setHasMore(res.hasMore);
+    setIsLoadingMore(false);
+  };
 
   if (isLoading) {
-    return <BookGridSkeleton count={12} />;
+    return <BookGridSkeleton count={LIMIT} />;
   }
 
-  if (filteredBooks.length === 0) {
+  if (books.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center text-center py-16 space-y-6">
         <div className="relative">
@@ -89,27 +106,39 @@ export function BookList() {
               Tu Biblioteca
             </h2>
             <p className="text-sm text-muted-foreground">
-              {filteredBooks.length} libro{filteredBooks.length !== 1 ? 's' : ''} en tu colección
+              {books.length} libro{books.length !== 1 ? 's' : ''} en tu colección
               {query && ` que coinciden con "${query}"`}
             </p>
           </div>
         </div>
-        
         <AddBook />
       </div>
-
       {/* Books grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 sm:gap-6">
-        {filteredBooks.map((book, index) => (
-          <div 
-            key={book.id} 
-            className="bounce-in"
-            style={{ animationDelay: `${index * 50}ms` }}
-          >
-            <BookCard book={book} />
-          </div>
-        ))}
+        {books.map((book, index) => {
+          const isLast = index === books.length - 1;
+          return (
+            <div
+              key={book.id}
+              className="bounce-in"
+              style={{ animationDelay: `${index * 50}ms` }}
+              ref={isLast ? lastBookRef : undefined}
+            >
+              <BookCard book={book} />
+            </div>
+          );
+        })}
       </div>
+      {isLoadingMore && (
+        <div className="flex justify-center py-6">
+          <BookGridSkeleton count={4} />
+        </div>
+      )}
+      {!hasMore && books.length > 0 && (
+        <div className="text-center text-muted-foreground py-6">
+          <span>Has llegado al final de tu biblioteca 🎉</span>
+        </div>
+      )}
     </div>
   );
 } 

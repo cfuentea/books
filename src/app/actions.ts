@@ -18,36 +18,35 @@ async function getUserSession() {
 
 export async function getBooks({
   query,
+  limit = 20,
+  cursor,
 }: {
   query?: string;
+  limit?: number;
+  cursor?: string | null;
 }) {
   const session = await getUserSession();
-  
   const where: any = {
     userId: session.user.id,
   };
-
   if (query) {
     where.OR = [
-      {
-        title: {
-          contains: query,
-        },
-      },
-      {
-        author: {
-          contains: query,
-        },
-      },
+      { title: { contains: query } },
+      { author: { contains: query } },
     ];
   }
-
-  return await prisma.book.findMany({
+  const books = await prisma.book.findMany({
     where,
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: { createdAt: "desc" },
+    take: limit + 1,
+    ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
   });
+  let hasMore = false;
+  if (books.length > limit) {
+    hasMore = true;
+    books.pop();
+  }
+  return { books, hasMore };
 }
 
 export async function addBook(formData: FormData) {
