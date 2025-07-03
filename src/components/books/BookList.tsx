@@ -46,9 +46,13 @@ export function BookList() {
     setHasMore(true);
     setIsLoading(true);
     setAutoLoading(true);
+    setError(null);
     getBooks({ query, limit: LIMIT, cursor: null }).then(res => {
       setBooks(res.books);
       setHasMore(res.hasMore);
+      setIsLoading(false);
+    }).catch(() => {
+      setError('Ocurrió un error al buscar libros.');
       setIsLoading(false);
     });
   }, [query]);
