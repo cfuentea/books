@@ -456,7 +456,7 @@ export function AddBookWizard() {
             <Plus className="mr-2 h-4 w-4" /> Añadir Libro
           </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 bg-opacity-95 backdrop-blur-md shadow-2xl border border-slate-200 dark:border-slate-700">
           <DialogHeader>
             <DialogTitle>Añadir Nuevo Libro</DialogTitle>
             <DialogDescription>
