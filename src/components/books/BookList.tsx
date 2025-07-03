@@ -15,34 +15,49 @@ export function BookList() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [autoLoading, setAutoLoading] = useState(true);
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
   const LIMIT = 10;
   const observer = useRef<IntersectionObserver | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
   const lastBookRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (isLoadingMore) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new window.IntersectionObserver(entries => {
-        if (entries[0].isIntersecting && hasMore) {
+        if (entries[0].isIntersecting && hasMore && autoLoading) {
           loadMore();
         }
       });
       if (node) observer.current.observe(node);
     },
-    [isLoadingMore, hasMore]
+    [isLoadingMore, hasMore, autoLoading]
   );
 
   useEffect(() => {
     setBooks([]);
     setHasMore(true);
     setIsLoading(true);
+    setAutoLoading(true);
     getBooks({ query, limit: LIMIT, cursor: null }).then(res => {
       setBooks(res.books);
       setHasMore(res.hasMore);
       setIsLoading(false);
     });
   }, [query]);
+
+  // Cargar más si la lista no llena la pantalla
+  useEffect(() => {
+    if (!isLoading && hasMore && autoLoading) {
+      const checkAndLoad = () => {
+        if (gridRef.current && window.innerHeight > gridRef.current.getBoundingClientRect().bottom) {
+          loadMore();
+        }
+      };
+      setTimeout(checkAndLoad, 300);
+    }
+  }, [books, isLoading, hasMore, autoLoading]);
 
   const loadMore = async () => {
     if (!hasMore || isLoadingMore || books.length === 0) return;
@@ -52,6 +67,11 @@ export function BookList() {
     setBooks(prev => [...prev, ...res.books]);
     setHasMore(res.hasMore);
     setIsLoadingMore(false);
+  };
+
+  const handleManualLoad = () => {
+    setAutoLoading(false);
+    loadMore();
   };
 
   if (isLoading) {
@@ -114,7 +134,7 @@ export function BookList() {
         <AddBook />
       </div>
       {/* Books grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 sm:gap-6">
+      <div ref={gridRef} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 sm:gap-6">
         {books.map((book, index) => {
           const isLast = index === books.length - 1;
           return (
@@ -132,6 +152,16 @@ export function BookList() {
       {isLoadingMore && (
         <div className="flex justify-center py-6">
           <BookGridSkeleton count={4} />
+        </div>
+      )}
+      {hasMore && !autoLoading && (
+        <div className="flex justify-center py-6">
+          <button
+            onClick={handleManualLoad}
+            className="btn-animate bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-2 rounded-lg shadow-lg"
+          >
+            Cargar más libros
+          </button>
         </div>
       )}
       {!hasMore && books.length > 0 && (
