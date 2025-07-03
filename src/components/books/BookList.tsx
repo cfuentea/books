@@ -21,9 +21,15 @@ export function BookList() {
   const LIMIT = 10;
   const observer = useRef<IntersectionObserver | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const lastBookRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (isLoadingMore) return;
+      if (!('IntersectionObserver' in window)) {
+        setAutoLoading(false);
+        setError('Tu navegador no soporta scroll automático. Usa el botón para cargar más libros.');
+        return;
+      }
       if (observer.current) observer.current.disconnect();
       observer.current = new window.IntersectionObserver(entries => {
         if (entries[0].isIntersecting && hasMore && autoLoading) {
@@ -62,10 +68,15 @@ export function BookList() {
   const loadMore = async () => {
     if (!hasMore || isLoadingMore || books.length === 0) return;
     setIsLoadingMore(true);
-    const last = books[books.length - 1];
-    const res = await getBooks({ query, limit: LIMIT, cursor: last.id });
-    setBooks(prev => [...prev, ...res.books]);
-    setHasMore(res.hasMore);
+    setError(null);
+    try {
+      const last = books[books.length - 1];
+      const res = await getBooks({ query, limit: LIMIT, cursor: last.id });
+      setBooks(prev => [...prev, ...res.books]);
+      setHasMore(res.hasMore);
+    } catch (e) {
+      setError('Ocurrió un error al cargar más libros. Intenta nuevamente.');
+    }
     setIsLoadingMore(false);
   };
 
@@ -154,7 +165,12 @@ export function BookList() {
           <BookGridSkeleton count={4} />
         </div>
       )}
-      {hasMore && !autoLoading && (
+      {error && (
+        <div className="text-center text-red-500 py-2">
+          {error}
+        </div>
+      )}
+      {hasMore && (
         <div className="flex justify-center py-6">
           <button
             onClick={handleManualLoad}
