@@ -78,17 +78,18 @@ export function BookCard({ book }: BookCardProps) {
       </CardHeader>
 
       <CardContent className="relative z-10 p-0">
-        <div className="relative w-full overflow-hidden rounded-lg mx-4" style={{ paddingTop: '150%' /* Aspect Ratio 2:3 */ }}>
+        <div className="relative w-full overflow-hidden rounded-2xl mx-4 bg-muted flex items-center justify-center" style={{ paddingTop: '150%' /* Aspect Ratio 2:3 */ }}>
           {book.cover ? (
             <Image
               src={book.cover}
               alt={`Portada de ${book.title}`}
               fill
-              className={`object-cover transition-transform duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
+              className={`object-contain transition-transform duration-300 p-2 ${isHovered ? 'scale-105' : 'scale-100'} rounded-2xl`}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{ background: 'rgba(255,255,255,0.7)' }}
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-center p-4">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center text-center p-4 rounded-2xl">
               <div className="space-y-2">
                 <BookOpen className="h-8 w-8 mx-auto text-gray-400 dark:text-gray-500" />
                 <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
@@ -97,9 +98,8 @@ export function BookCard({ book }: BookCardProps) {
               </div>
             </div>
           )}
-          
           {/* Overlay on hover */}
-          <div className={`absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300`} />
+          <div className={`absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 rounded-2xl`} />
         </div>
       </CardContent>
 
