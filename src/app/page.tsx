@@ -74,42 +74,47 @@ export default function Home() {
 
   if (status === "unauthenticated") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-[#f5f7fa] via-[#e8eaf6] to-[#f3e5f5] dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         {/* HERO SECTION */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col items-center text-center gap-10 fade-in">
-          <div className="relative w-full max-w-3xl mx-auto">
-            <div className="absolute -top-16 -left-16 hidden md:block opacity-40 animate-bounce-slow">
-              <Image src="/globe.svg" alt="Ilustración mundo" width={80} height={80} />
+          <div className="flex flex-col md:flex-row items-center justify-center gap-12 w-full max-w-5xl mx-auto">
+            <div className="flex-1 flex justify-center">
+              <Image src="/undraw_book_lover.svg" alt="Lectura inspiradora" width={350} height={350} className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto" />
             </div>
-            <div className="absolute -bottom-16 -right-16 hidden md:block opacity-40 animate-bounce-slow">
-              <Image src="/window.svg" alt="Ilustración ventana" width={80} height={80} />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight gradient-text mb-4">
-              Organiza, descubre y comparte tu biblioteca personal
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-              Lleva el control de tus libros, encuentra recomendaciones y accede desde cualquier lugar.
-            </p>
-            <Button 
-              onClick={() => signIn("google")}
-              size="lg"
-              className="btn-animate bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-10 py-4 text-xl shadow-xl"
-            >
-              <Icons.google className="mr-2 h-6 w-6" />
-              Regístrate gratis
-            </Button>
-            <div className="flex flex-wrap justify-center gap-6 mt-10">
-              <div className="flex items-center gap-2 text-lg text-muted-foreground">
-                <Users className="h-5 w-5 text-blue-500" />
-                <span><b>{SOCIAL_PROOF.users}</b> usuarios</span>
-              </div>
-              <div className="flex items-center gap-2 text-lg text-muted-foreground">
-                <Book className="h-5 w-5 text-purple-500" />
-                <span><b>{SOCIAL_PROOF.books}</b> libros registrados</span>
-              </div>
-              <div className="flex items-center gap-2 text-lg text-muted-foreground">
-                <Globe className="h-5 w-5 text-green-500" />
-                <span><b>{SOCIAL_PROOF.friends}</b> bibliotecas compartidas</span>
+            <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-6">
+              <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight gradient-text mb-2">
+                Tu biblioteca, tu refugio de conocimiento
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground mb-2 max-w-xl">
+                Organiza, explora y atesora tus libros favoritos en un espacio pensado para lectores exigentes. Descubre nuevas lecturas, comparte tu pasión y accede a tu colección desde cualquier lugar.
+              </p>
+              <ul className="text-base md:text-lg text-muted-foreground space-y-2 mb-4">
+                <li className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-purple-600" /> Organización elegante y sencilla</li>
+                <li className="flex items-center gap-2"><SearchIcon className="h-5 w-5 text-blue-600" /> Búsqueda rápida y precisa</li>
+                <li className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-yellow-500" /> Recomendaciones personalizadas</li>
+                <li className="flex items-center gap-2"><Share2 className="h-5 w-5 text-pink-600" /> Comparte tu pasión lectora</li>
+              </ul>
+              <Button 
+                onClick={() => signIn("google")}
+                size="lg"
+                className="btn-animate bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-10 py-4 text-xl shadow-xl"
+              >
+                <Icons.google className="mr-2 h-6 w-6" />
+                Regístrate gratis
+              </Button>
+              <div className="flex flex-wrap justify-center md:justify-start gap-6 mt-6">
+                <div className="flex items-center gap-2 text-base text-muted-foreground">
+                  <Users className="h-5 w-5 text-blue-500" />
+                  <span><b>{SOCIAL_PROOF.users}</b> lectores</span>
+                </div>
+                <div className="flex items-center gap-2 text-base text-muted-foreground">
+                  <Book className="h-5 w-5 text-purple-500" />
+                  <span><b>{SOCIAL_PROOF.books}</b> libros registrados</span>
+                </div>
+                <div className="flex items-center gap-2 text-base text-muted-foreground">
+                  <Globe className="h-5 w-5 text-green-500" />
+                  <span><b>{SOCIAL_PROOF.friends}</b> bibliotecas compartidas</span>
+                </div>
               </div>
             </div>
           </div>

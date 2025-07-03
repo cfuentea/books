@@ -17,7 +17,7 @@ export function BookList() {
   const [hasMore, setHasMore] = useState(true);
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
-  const LIMIT = 20;
+  const LIMIT = 10;
   const observer = useRef<IntersectionObserver | null>(null);
   const lastBookRef = useCallback(
     (node: HTMLDivElement | null) => {
