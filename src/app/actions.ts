@@ -32,8 +32,8 @@ export async function getBooks({
   };
   if (query) {
     where.OR = [
-      { title: { contains: query } },
-      { author: { contains: query } },
+      { title: { contains: query, mode: 'insensitive' } },
+      { author: { contains: query, mode: 'insensitive' } },
     ];
   }
   const books = await prisma.book.findMany({
