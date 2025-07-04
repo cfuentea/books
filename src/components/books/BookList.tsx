@@ -22,6 +22,21 @@ export function BookList() {
   const observer = useRef<IntersectionObserver | null>(null);
   const gridRef = useRef<HTMLDivElement | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const loadMore = useCallback(async () => {
+    if (!hasMore || isLoadingMore || books.length === 0) return;
+    setIsLoadingMore(true);
+    setError(null);
+    try {
+      const last = books[books.length - 1];
+      const res = await getBooks({ query, limit: LIMIT, cursor: last.id });
+      setBooks(prev => [...prev, ...res.books]);
+      setHasMore(res.hasMore);
+    } catch (e) {
+      setError('Ocurrió un error al cargar más libros. Intenta nuevamente.');
+    }
+    setIsLoadingMore(false);
+  }, [hasMore, isLoadingMore, books, query, LIMIT]);
+
   const lastBookRef = useCallback(
     (node: HTMLDivElement | null) => {
       if (isLoadingMore) return;
@@ -38,8 +53,17 @@ export function BookList() {
       });
       if (node) observer.current.observe(node);
     },
-    [isLoadingMore, hasMore, autoLoading]
+    [isLoadingMore, hasMore, autoLoading, loadMore]
   );
+
+  // Cleanup observer on unmount
+  useEffect(() => {
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setBooks([]);
@@ -55,7 +79,7 @@ export function BookList() {
       setError('Ocurrió un error al buscar libros.');
       setIsLoading(false);
     });
-  }, [query]);
+  }, [query, LIMIT]);
 
   // Cargar más si la lista no llena la pantalla
   useEffect(() => {
@@ -67,22 +91,7 @@ export function BookList() {
       };
       setTimeout(checkAndLoad, 300);
     }
-  }, [books, isLoading, hasMore, autoLoading]);
-
-  const loadMore = async () => {
-    if (!hasMore || isLoadingMore || books.length === 0) return;
-    setIsLoadingMore(true);
-    setError(null);
-    try {
-      const last = books[books.length - 1];
-      const res = await getBooks({ query, limit: LIMIT, cursor: last.id });
-      setBooks(prev => [...prev, ...res.books]);
-      setHasMore(res.hasMore);
-    } catch (e) {
-      setError('Ocurrió un error al cargar más libros. Intenta nuevamente.');
-    }
-    setIsLoadingMore(false);
-  };
+  }, [books, isLoading, hasMore, autoLoading, loadMore]);
 
   const handleManualLoad = () => {
     setAutoLoading(false);

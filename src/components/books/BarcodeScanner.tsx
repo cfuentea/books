@@ -99,12 +99,12 @@ export function BarcodeScanner({ onScan, onClose }: BarcodeScannerProps) {
                     advanced: [
                         { focusMode: 'continuous' },
                         { zoom: 2.0 }
-                    ]
-                } as any}
+                    ] as MediaTrackConstraints['advanced']
+                }}
                 onUserMedia={startScan}
                 onUserMediaError={(err) => {
                     console.error("Webcam error:", err);
-                    setError("Failed to start camera. It might be in use by another application.");
+                    setError("No se pudo acceder a la cámara. Puede estar siendo usada por otra aplicación.");
                 }}
               />
             )}
