@@ -2,22 +2,26 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./prisma";
 import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions } from "next-auth";
-import { hasReachedUserLimit } from "./invite";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID || "demo-client-id",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "demo-client-secret",
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "dev-secret-key-for-local-development",
   session: {
     strategy: "jwt",
   },
   callbacks: {
     async signIn({ user, account, profile }) {
+      // En desarrollo, permitir todos los accesos
+      if (process.env.NODE_ENV === "development") {
+        return true;
+      }
+      
       // Verificar si el usuario ya existe
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email! },
@@ -40,12 +44,6 @@ export const authOptions: NextAuthOptions = {
         return true;
       }
 
-      // Nuevo usuario - verificar límites
-      if (await hasReachedUserLimit()) {
-        console.log("Límite de usuarios alcanzado");
-        return false;
-      }
-
       return true;
     },
     async session({ session, token }) {
@@ -59,4 +57,5 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/signin",
     error: "/auth/error",
   },
+  debug: process.env.NODE_ENV === "development",
 }; 

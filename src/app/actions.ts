@@ -11,6 +11,18 @@ import { Decimal } from "@prisma/client/runtime/library";
 
 async function getUserSession() {
   const session = await getServerSession(authOptions);
+  
+  // En desarrollo, crear una sesión ficticia si no hay autenticación
+  if (process.env.NODE_ENV === "development" && !session?.user?.id) {
+    return {
+      user: {
+        id: "dev-user-id",
+        name: "Usuario de Desarrollo",
+        email: "dev@example.com"
+      }
+    };
+  }
+  
   if (!session?.user?.id) {
     throw new Error("You must be signed in to perform this action.");
   }
@@ -138,7 +150,7 @@ export async function addBook(formData: FormData) {
       isLent: isLent || false,
       lentTo: isLent ? (lentTo || null) : null,
       lentAt: isLent ? lentDateTime : null,
-      tags: tags || [],
+      tags: tags || null,
       userId: session.user.id,
     },
   });
@@ -245,7 +257,7 @@ export async function updateBook(id: string, formData: FormData) {
     isLent: isLent || false,
     lentTo: isLent ? (lentTo || null) : null,
     lentAt: isLent ? lentDateTime : null,
-    tags: tags || [],
+    tags: tags || null,
   };
 
   if (coverPath) {

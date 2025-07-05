@@ -21,7 +21,7 @@ export const BookSchema = z.object({
   isLent: z.boolean().default(false),
   lentTo: z.string().optional(),
   lentAt: z.string().optional(),
-  tags: z.array(z.string()).default([]),
+  tags: z.string().optional(),
 });
 
 export type BookFormValues = z.infer<typeof BookSchema>; 

@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -26,7 +26,7 @@ model Book {
   isLent       Boolean      @default(false) // Si está prestado
   lentTo       String?      // A quién está prestado
   lentAt       DateTime?    // Cuándo se prestó
-  tags         String[]     // Etiquetas personalizadas (array de strings)
+  tags         String?      // Etiquetas personalizadas (separadas por comas)
   
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

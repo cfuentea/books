@@ -135,7 +135,12 @@ export function getMaxUsers(): number {
  * Verifica si se ha alcanzado el límite de usuarios
  */
 export async function hasReachedUserLimit(): Promise<boolean> {
-  const stats = await getUserStats();
-  const maxUsers = getMaxUsers();
-  return stats.totalUsers >= maxUsers;
+  // En desarrollo, nunca limitar usuarios
+  if (process.env.NODE_ENV === "development") {
+    return false;
+  }
+  
+  // En producción, limitar a 1000 usuarios por ejemplo
+  const userCount = await prisma.user.count();
+  return userCount >= 1000;
 } 

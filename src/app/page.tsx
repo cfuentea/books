@@ -64,10 +64,30 @@ const TESTIMONIALS = [
 export default function Home() {
   const { data: session, status } = useSession();
 
+  // Modo de desarrollo: mostrar interfaz directamente si las credenciales de Google no están configuradas
+  const isDevelopmentMode = process.env.NODE_ENV === "development" && 
+    (!process.env.GOOGLE_CLIENT_ID || process.env.GOOGLE_CLIENT_ID === "demo-client-id");
+
   if (status === "loading") {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Loading text="Cargando tu biblioteca..." size="lg" variant="book" />
+        <div className="text-center space-y-4">
+          <Loading text="Cargando tu biblioteca..." size="lg" variant="book" />
+          {isDevelopmentMode && (
+            <div className="mt-6">
+              <p className="text-sm text-muted-foreground mb-2">
+                Modo de desarrollo detectado
+              </p>
+              <Button 
+                onClick={() => window.location.href = "/dev"}
+                variant="outline"
+                className="text-xs"
+              >
+                Acceder al modo de desarrollo
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
@@ -94,14 +114,30 @@ export default function Home() {
                 <li className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-yellow-500" /> Recomendaciones personalizadas</li>
                 <li className="flex items-center gap-2"><Share2 className="h-5 w-5 text-pink-600" /> Comparte tu pasión lectora</li>
               </ul>
-              <Button 
-                onClick={() => signIn("google")}
-                size="lg"
-                className="btn-animate bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-10 py-4 text-xl shadow-xl"
-              >
-                <Icons.google className="mr-2 h-6 w-6" />
-                Regístrate gratis
-              </Button>
+              
+              <div className="flex flex-col gap-3">
+                <Button 
+                  onClick={() => signIn("google")}
+                  size="lg"
+                  className="btn-animate bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-10 py-4 text-xl shadow-xl"
+                >
+                  <Icons.google className="mr-2 h-6 w-6" />
+                  Regístrate gratis
+                </Button>
+                
+                {isDevelopmentMode && (
+                  <Button 
+                    onClick={() => window.location.href = "/dev"}
+                    variant="outline"
+                    size="lg"
+                    className="px-10 py-4 text-lg"
+                  >
+                    <BookOpen className="mr-2 h-5 w-5" />
+                    Modo de desarrollo
+                  </Button>
+                )}
+              </div>
+              
               <div className="flex flex-wrap justify-center md:justify-start gap-6 mt-6">
                 <div className="flex items-center gap-2 text-base text-muted-foreground">
                   <Users className="h-5 w-5 text-blue-500" />
@@ -157,7 +193,7 @@ export default function Home() {
             {TESTIMONIALS.map((t, i) => (
               <div key={i} className="glass rounded-xl p-6 flex flex-col items-center text-center hover-lift fade-in" style={{ animationDelay: `${i * 100}ms` }}>
                 <CheckCircle className="h-8 w-8 text-green-500 mb-2" />
-                <p className="text-lg italic mb-4">“{t.text}”</p>
+                <p className="text-lg italic mb-4">"{t.text}"</p>
                 <span className="font-semibold text-blue-600">{t.name}</span>
               </div>
             ))}
@@ -167,14 +203,28 @@ export default function Home() {
         {/* CTA FINAL */}
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col items-center text-center fade-in">
           <h2 className="text-3xl font-bold mb-6 gradient-text">¿Listo para organizar tu biblioteca?</h2>
-          <Button 
-            onClick={() => signIn("google")}
-            size="lg"
-            className="btn-animate bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-10 py-4 text-xl shadow-xl"
-          >
-            <Icons.google className="mr-2 h-6 w-6" />
-            Regístrate gratis
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button 
+              onClick={() => signIn("google")}
+              size="lg"
+              className="btn-animate bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-10 py-4 text-xl shadow-xl"
+            >
+              <Icons.google className="mr-2 h-6 w-6" />
+              Regístrate gratis
+            </Button>
+            
+            {isDevelopmentMode && (
+              <Button 
+                onClick={() => window.location.href = "/dev"}
+                variant="outline"
+                size="lg"
+                className="px-10 py-4 text-xl"
+              >
+                <BookOpen className="mr-2 h-6 w-6" />
+                Demo sin registro
+              </Button>
+            )}
+          </div>
         </section>
       </div>
     );
