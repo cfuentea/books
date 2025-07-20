@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       // Verificar si el usuario ya existe
       const existingUser = await prisma.user.findUnique({
         where: { email: user.email! },

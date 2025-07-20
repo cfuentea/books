@@ -110,7 +110,7 @@ export function EditBook({ book, children }: EditBookProps) {
         <DialogHeader>
           <DialogTitle>Edit Book</DialogTitle>
           <DialogDescription>
-            Make changes to your book here. Click save when you're done.
+            Make changes to your book here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
