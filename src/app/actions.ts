@@ -27,7 +27,7 @@ export async function getBooks({
   cursor?: string | null;
 }) {
   const session = await getUserSession();
-  const where: any = {
+  const where: Record<string, unknown> = {
     userId: session.user.id,
   };
   if (query) {
@@ -76,7 +76,7 @@ export async function addBook(formData: FormData) {
     lentAt,
     tags
   } = validatedFields.data;
-  let cover = validatedFields.data.cover;
+  const cover = validatedFields.data.cover;
 
   let coverPath: string | null = null;
 
@@ -185,7 +185,7 @@ export async function updateBook(id: string, formData: FormData) {
     lentAt,
     tags
   } = validatedFields.data;
-  let cover = validatedFields.data.cover;
+  const cover = validatedFields.data.cover;
 
   let coverPath: string | null = null;
 
@@ -231,7 +231,7 @@ export async function updateBook(id: string, formData: FormData) {
     }
   }
 
-  const dataToUpdate: any = {
+  const dataToUpdate: Record<string, unknown> = {
     title,
     author: author || "Unknown Author",
     isbn: isbn || null,
@@ -293,7 +293,7 @@ export async function searchBookByISBN(isbn: string): Promise<Partial<BookFormVa
       const book = data[bookKey];
       return {
         title: book.title,
-        author: book.authors ? book.authors.map((a: { name: any; }) => a.name).join(", ") : "Unknown Author",
+        author: book.authors ? book.authors.map((a: { name: string }) => a.name).join(", ") : "Unknown Author",
         description: typeof book.notes === 'string' ? book.notes : '',
         cover: book.cover?.large,
         publishedAt: book.publish_date,
